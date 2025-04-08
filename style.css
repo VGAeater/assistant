@@ -1,0 +1,44 @@
+body {
+	background: #3C3C3C;
+}
+#video-box {
+	position: fixed;
+	width: 60vh;
+	top: 0px;
+	left: 0px;
+	border: 2px red solid;
+	border-radius: 1vh;
+	font-size: 0px;
+	background: #282828;
+	overflow: hidden;
+}
+video {
+	width: 100%;
+	background: url(nosignal.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+#video-options {
+	opacity: 0;
+	transition-duration: 0.5s;
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+}
+#video-options:hover {
+	opacity: 1;
+}
+button {
+	height: 2vh;
+	border: none;
+	margin: 0.5vh;
+	margin-right: 0px;
+	color: #282828;
+	background: #cc1444;
+	border-radius: 0.5vh;
+}
+button:hover {
+	background: red;
+}
+
