@@ -1,3 +1,26 @@
+var promptbar = document.getElementById("prompt");
+var textbox = document.getElementById("text-box");
+
+function auto_resize() {
+	promptbar.style.height = "0px";
+	let new_height = Math.min(promptbar.scrollHeight, window.innerHeight / 2);
+	promptbar.style.height = new_height + "px";
+	textbox.style.height = window.innerHeight * 0.9 - new_height + "px";
+}
+
+promptbar.oninput = e => {
+	auto_resize();
+};
+
+promptbar.onkeydown = e => {
+	if (!e.shiftKey && e.code == "Enter") {
+		e.preventDefault();
+		console.log(promptbar.value);
+		promptbar.value = "";
+	}
+	auto_resize();
+};
+
 var video = document.getElementById('video');
 
 function setStream(stream) {
@@ -39,3 +62,59 @@ function useScreen() {
 
 	return navigator.mediaDevices.getDisplayMedia(constraints).then(setStream);
 }
+
+Number.prototype.clamp = function(min, max) {
+	return Math.min(Math.max(this, min), max);
+};
+
+var dragging_video = false;
+var mouse_start_x = 0, mouse_start_y = 0;
+var box_start_x = 0, box_start_y = 0;
+
+function video_pos_clamp() {
+	let box = video.parentElement.getBoundingClientRect();
+	video.parentElement.style.left = box.x.clamp(0, window.innerWidth - box.width) + "px";
+	video.parentElement.style.top = box.y.clamp(0, window.innerHeight - box.height) + "px";
+	if (box.x >= window.innerWidth - box.width) {
+		video.parentElement.style.left = "";
+		video.parentElement.style.right = "0px";
+	}
+}
+
+video.parentElement.onmousedown = e => {
+	mouse_start_x = e.clientX;
+	mouse_start_y = e.clientY;
+	box_start_x = video.parentElement.getBoundingClientRect().x;
+	box_start_y = video.parentElement.getBoundingClientRect().y;
+	if (e.button == 0) {
+		dragging_video = true;
+	}
+};
+
+document.onmouseup = e => {
+	dragging_video = false;
+};
+
+document.onmousemove = e => {
+	if (dragging_video) {
+		video.parentElement.style.right = "";
+		video.parentElement.style.left = box_start_x + e.clientX - mouse_start_x + "px";
+		video.parentElement.style.top = box_start_y + e.clientY - mouse_start_y + "px";
+		video_pos_clamp();
+	}
+	mousex = e.clientX;
+	mousey = e.clientY;
+};
+
+window.onload = e => {
+	auto_resize();
+};
+
+window.onresize = e => {
+	auto_resize();
+	video_pos_clamp();
+};
+
+video.onresize = e => {
+	video_pos_clamp();
+};

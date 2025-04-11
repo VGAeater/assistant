@@ -3,13 +3,28 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="style.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<div id="video-box">
+		<div id="text-box">
+			hello
+		</div>
+		<div id="prompt-box">
+			<textarea id="prompt">hello</textarea>
+		</div>
+		<div id="bar">
+			<button onclick="document.getElementById('video-box').classList.toggle('hidden');">
+				<img src="preview.svg">
+			</button>
+		</div>
+		<div id="video-box" class="hidden">
 			<video id="video" playsinline autoplay muted></video>
 			<div id="video-options">
 				<button onclick="useCamera();">Camera</button>
 				<button onclick="useScreen();">Screen</button>
+				<button onclick="document.getElementById('video-box').classList.add('hidden');" class="right">Minimize</button>
 			</div>
 		</div>
 		<script src="script.js"></script>
