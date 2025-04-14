@@ -2,21 +2,25 @@
 
 <html>
 	<head>
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" href="static/style.css">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 	</head>
 	<body>
-		<div id="text-box">
-			hello
-		</div>
+		<div id="text-box"></div>
 		<div id="prompt-box">
-			<textarea id="prompt">hello</textarea>
+			<textarea id="prompt" placeholder="Type here."></textarea>
 		</div>
 		<div id="bar">
 			<button onclick="document.getElementById('video-box').classList.toggle('hidden');">
-				<img src="preview.svg">
+				<img src="static/preview.svg">
+			</button>
+			<button onclick="sendImage();">
+				<img src="static/upload.svg">
+			</button>
+			<button onclick="generate();">
+				<img src="static/generate.svg">
 			</button>
 		</div>
 		<div id="video-box" class="hidden">
@@ -27,6 +31,6 @@
 				<button onclick="document.getElementById('video-box').classList.add('hidden');" class="right">Minimize</button>
 			</div>
 		</div>
-		<script src="script.js"></script>
+		<script src="static/script.js"></script>
 	</body>
 </html>

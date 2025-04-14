@@ -15,7 +15,8 @@ promptbar.oninput = e => {
 promptbar.onkeydown = e => {
 	if (!e.shiftKey && e.code == "Enter") {
 		e.preventDefault();
-		console.log(promptbar.value);
+		fetch('/send/text', {method: "POST", body: promptbar.value});
+		textbox.innerHTML += promptbar.value.replace("\n", "<br>") + "<br><br>";
 		promptbar.value = "";
 	}
 	auto_resize();
@@ -118,3 +119,42 @@ window.onresize = e => {
 video.onresize = e => {
 	video_pos_clamp();
 };
+
+function sendImage() {
+	let input = document.createElement('input');
+	input.type = 'file';
+
+	input.onchange = e => {
+		let formData = new FormData();
+		for (let i = 0; i < e.target.files.length; i++) {
+			formData.append((Math.random() * 0xFFFFFFFF << 0).toString(16), e.target.files[i]);
+			let img = document.createElement("img");
+			img.setAttribute('src', URL.createObjectURL(e.target.files[i]));
+			textbox.appendChild(img);
+			img.style.width = '50%';
+			textbox.innerHTML += "<br><br>";
+		}
+
+		fetch('/send/image', {method: "POST", body: formData});
+	}
+
+	input.click();
+}
+
+function generate() {
+	fetch("generate").then(async response => {
+		const reader = response.body.getReader();
+
+		while (true) {
+    			let { value, done } = await reader.read();
+			if (done) { break; }
+			text = "";
+			for (let i = 0; i < value.length; i++) {
+				text += String.fromCharCode(value[i]);
+			}
+			textbox.innerHTML += text.replace("\n", "<br>");
+		}
+
+		textbox.innerHTML += "<br><br>";
+	});
+}
