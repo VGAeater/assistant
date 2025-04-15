@@ -66,6 +66,8 @@ button.right {
 	border-radius: 1.5vh;
 }
 #text-box {
+	overflow-y: scroll;
+	scrollbar-width: none;
 	width: calc( min( 100vh / 1.41421356, 100vw - 4vh ) );
 	position: fixed;
 	top: 6vh;

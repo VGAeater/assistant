@@ -16,7 +16,7 @@ promptbar.onkeydown = e => {
 	if (!e.shiftKey && e.code == "Enter") {
 		e.preventDefault();
 		fetch('/send/text', {method: "POST", body: promptbar.value});
-		textbox.innerHTML += promptbar.value.replace("\n", "<br>") + "<br><br>";
+		textbox.innerHTML += '<p style="text-align:right;">' + promptbar.value.replace("\n", "<br>") + "</p><br>";
 		promptbar.value = "";
 	}
 	auto_resize();
